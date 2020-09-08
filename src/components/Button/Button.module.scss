@@ -1,0 +1,23 @@
+.sing {
+  border: 2px;
+  background-color: inherit;
+  width: 109px;
+  height: 51px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.sing:focus {
+  color: #52c41a;
+  outline-color: #52c41a;
+}
+
+.sing:hover {
+  color: #52c41a;
+}
