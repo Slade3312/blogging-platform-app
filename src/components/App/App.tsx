@@ -1,13 +1,13 @@
 import React from 'react';
 import appClass from './App.module.scss';
-import TempComponent from '../TempComponent';
 import Header from '../Header/Header';
+import ArticlesList from '../ArticlesList/ArticlesList';
 
 const App: React.FC = () => {
   return (
     <div className={appClass.wrapper}>
-      <TempComponent />
       <Header />
+      <ArticlesList />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-.sing {
+.sign {
   border: 2px;
   background-color: inherit;
   width: 109px;
@@ -13,11 +13,27 @@
   line-height: 28px;
 }
 
-.sing:focus {
+.sign:focus {
   color: #52c41a;
   outline-color: #52c41a;
 }
 
-.sing:hover {
+.sign:hover {
   color: #52c41a;
+}
+
+.tag {
+  width: fit-content;
+  height: 20px;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  border-radius: 2px;
+  margin-right: 5px;
+  background-color: #fff;
 }

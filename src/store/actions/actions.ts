@@ -1,8 +1,23 @@
-import { TempActions } from '../../types';
+/* eslint-disable import/prefer-default-export */
+import { Dispatch } from 'redux'
+import { Actions } from '../../types';
+import { getArticles } from '../../services/serviceAPI'
 
-const actions = (payload: boolean): TempActions => ({ type: 'TEMP', payload });
-const actions2 = (payload: boolean): TempActions => ({ type: 'TEMP', payload });
+
+
+const getArticlesAction = () => {
+    return (dispatch: Dispatch): void => {
+        getArticles().then((value) => {
+            dispatch({
+                type: Actions.getArticles,
+                payload: value
+            })
+        })
+    }
+}
+
+
+
 export {
-    actions,
-    actions2
+    getArticlesAction
 } 
