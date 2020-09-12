@@ -5,6 +5,9 @@ import appClass from './App.module.scss';
 import Header from '../Header/Header';
 import ArticlesList from '../ArticlesList/ArticlesList';
 import ArticleFull from '../ArticleFull/ArticleFull';
+import SignInForm from '../SignInForm/SignInForm';
+import SignUpForm from '../SignUpForm/SignUpForm';
+import ProfileEditForm from '../ProfileEditForm/ProfileEditForm';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +20,15 @@ const App: React.FC = () => {
         </Route>
         <Route path="/articles/:artId">
           <ArticleFull />
+        </Route>
+        <Route exact path="/sign-in">
+          <SignInForm />
+        </Route>
+        <Route exact path="/sign-up">
+          <SignUpForm />
+        </Route>
+        <Route path="/profile">
+          <ProfileEditForm />
         </Route>
       </Switch>
     </div>

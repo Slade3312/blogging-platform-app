@@ -17,7 +17,6 @@ const Article: React.FC<ArticleType> = (props) => {
     description,
     slug,
     full,
-    body,
   } = props;
 
   const source = ` 

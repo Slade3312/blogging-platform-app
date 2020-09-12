@@ -54,4 +54,8 @@ export type ArticleType = {
         image: string,
         following: false
     }
-}   
+}
+
+export type InputFormType = {
+    name?: string,
+}
