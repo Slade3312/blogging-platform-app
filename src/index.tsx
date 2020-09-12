@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import { Alert } from 'antd';
 import { Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './components/App/App';
 import store from './store/store';
 
@@ -12,7 +13,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorBoundary>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </ErrorBoundary>
     </Provider>
   </React.StrictMode>,

@@ -33,7 +33,12 @@ export type ArticlesType = {
     articlesCount: number
 }
 
+export type ArticleFullType = {
+    article: ArticleType
+}
+
 export type ArticleType = {
+    full?: boolean
     slug: string,
     title: string,
     description: string,
@@ -49,4 +54,4 @@ export type ArticleType = {
         image: string,
         following: false
     }
-}    
+}   

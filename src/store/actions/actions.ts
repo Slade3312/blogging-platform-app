@@ -5,9 +5,9 @@ import { getArticles } from '../../services/serviceAPI'
 
 
 
-const getArticlesAction = () => {
+const getArticlesAction = (currentPage: number) => {
     return (dispatch: Dispatch): void => {
-        getArticles().then((value) => {
+        getArticles(currentPage).then((value) => {
             dispatch({
                 type: Actions.getArticles,
                 payload: value

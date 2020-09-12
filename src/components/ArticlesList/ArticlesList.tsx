@@ -1,38 +1,77 @@
-import React, { useEffect } from 'react';
-import { connect, ConnectedProps } from 'react-redux';
-import contentClass from './ArticlesList.module.scss';
-import { State } from '../../types';
+import React, { useEffect, useState } from 'react';
+// import { connect, ConnectedProps } from 'react-redux';
+import { Pagination, Spin, Alert } from 'antd';
+import { useHistory, useLocation } from 'react-router-dom';
+import articlesClass from './ArticlesList.module.scss';
+import { ArticlesType } from '../../types';
 import Article from '../Article/Article';
-import * as actions from '../../store/actions/actions';
+import { getArticles } from '../../services/serviceAPI';
 
-function mapStateToProps(state: State) {
-  const { articles } = state;
-  return {
-    articles,
-  };
-}
-
-const mapDispatch = actions;
-const connector = connect(mapStateToProps, mapDispatch);
-
-type PropsFromRedux = ConnectedProps<typeof connector>;
-type Props = PropsFromRedux;
-
-const ArticlesList: React.FC<Props> = ({ articles, getArticlesAction }) => {
-  useEffect(() => {
-    getArticlesAction();
-  }, [getArticlesAction]);
+const ArticlesList: React.FC = () => {
+  const [articlesObj, setArticlesObj] = useState<ArticlesType | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const location = useLocation();
+  const history = useHistory();
 
   let content = null;
+  let pages = 0;
 
-  if (articles.length !== 0) {
+  useEffect(() => {
+    setLoading(true);
+    getArticles(Number(location.search.match(/\d+/g)?.[0]))
+      .then((value) => {
+        setLoading(false);
+        setArticlesObj(value);
+      })
+      .catch((err) => {
+        setError(true);
+        console.log(err);
+      });
+  }, [location.search]);
+
+  if (articlesObj) {
+    const { articles, articlesCount } = articlesObj;
+    pages = articlesCount;
     content = articles.map((article) => {
       const key = article.slug;
       return <Article key={key} {...article} />;
     });
   }
 
-  return <div className={contentClass.wrapper}>{content}</div>;
+  return (
+    <div className={articlesClass.wrapper}>
+      {loading && !error ? <Spin className={articlesClass.spin} tip="Loading..." /> : content}
+      {error ? <Alert message="Sorry, but we were unable to load articles" type="error" /> : null}
+      <Pagination
+        className={articlesClass.pagination}
+        size="small"
+        showSizeChanger={false}
+        onChange={(page) => {
+          history.replace({ search: `page=${page}` });
+        }}
+        pageSize={5}
+        total={pages}
+        current={Number(location.search.match(/\d+/g)?.[0])}
+      />
+    </div>
+  );
 };
 
-export default connector(ArticlesList);
+export default ArticlesList;
+
+// import * as actions from '../../store/actions/actions';
+
+// function mapStateToProps(state: State) {
+//   const { articles, articlesCount } = state;
+//   return {
+//     articles,
+//     articlesCount,
+//   };
+// }
+
+// const mapDispatch = actions;
+// const connector = connect(mapStateToProps, mapDispatch);
+
+// type PropsFromRedux = ConnectedProps<typeof connector>;
+// type Props = PropsFromRedux;
