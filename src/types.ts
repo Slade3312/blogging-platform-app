@@ -1,4 +1,6 @@
+
 // import Button, { ButtonProps } from 'antd/lib/button';
+import { FieldErrors, ValidationRules } from 'react-hook-form';
 
 
 
@@ -56,6 +58,32 @@ export type ArticleType = {
     }
 }
 
-export type InputFormType = {
-    name?: string,
-}
+export type InputProps = {
+    label: string,
+    type: string,
+    errors?: FieldErrors,
+    errorMassage?: string,
+    rules?: ValidationRules
+};
+
+export type InputPropsWithoutErrors = Omit<InputProps, 'errors'>;
+
+// export type InputFormType = {
+//     label?: string,
+//     type?: 'text' | 'email'
+//     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void | undefined,
+//     errorMassage?: string,
+//     name?: string,
+// }
+
+export type FormDataSingUp = {
+    Username: string;
+    'Email address': string;
+    Password: string;
+    'Repeat Password': string;
+};
+
+export type FormDataSingIn = {
+    Password: string;
+    'Email address': string;
+};

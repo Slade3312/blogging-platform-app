@@ -1,6 +1,7 @@
 .wrapper {
   width: 384px;
-  height: 599px;
+  min-height: 599px;
+  max-width: fit-content;
   background: #ffffff;
   margin: 30px auto 0 auto;
   padding: 40px 0 0 0;
