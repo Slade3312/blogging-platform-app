@@ -2,18 +2,22 @@ import { InputPropsWithoutErrors } from "../../types";
 
 const InputFormSingInProps: InputPropsWithoutErrors[] = [
   {
-    label: 'Email address',
+    name: 'Email address',
+    label: 'email',
     type: 'email',
     errorMassage: 'Email address must be correct',
+    responseError: null,
     rules: {
       required: true,
       pattern: /^[^@]+@[^@.]+\.[^@]+$/
     }
   },
   {
-    label: 'Password',
+    name: 'Password',
+    label: 'password',
     type: 'password',
     errorMassage: 'Password must be between 6 and 40 characters',
+    responseError: null,
     rules: {
       required: true,
       maxLength: 40,

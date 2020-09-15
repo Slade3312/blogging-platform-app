@@ -4,6 +4,7 @@ import './index.scss';
 import { Alert } from 'antd';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { CookiesProvider } from 'react-cookie';
 import App from './components/App/App';
 import store from './store/store';
 
@@ -13,9 +14,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorBoundary>
-        <Router>
-          <App />
-        </Router>
+        <CookiesProvider>
+          <Router>
+            <App />
+          </Router>
+        </CookiesProvider>
       </ErrorBoundary>
     </Provider>
   </React.StrictMode>,

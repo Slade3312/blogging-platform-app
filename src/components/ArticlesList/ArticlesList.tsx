@@ -59,19 +59,3 @@ const ArticlesList: React.FC = () => {
 };
 
 export default ArticlesList;
-
-// import * as actions from '../../store/actions/actions';
-
-// function mapStateToProps(state: State) {
-//   const { articles, articlesCount } = state;
-//   return {
-//     articles,
-//     articlesCount,
-//   };
-// }
-
-// const mapDispatch = actions;
-// const connector = connect(mapStateToProps, mapDispatch);
-
-// type PropsFromRedux = ConnectedProps<typeof connector>;
-// type Props = PropsFromRedux;

@@ -1,20 +1,67 @@
-/* eslint-disable import/prefer-default-export */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { ArticlesType, ArticleFullType } from '../types';
+import { ArticlesType, ArticleFullType, RegistrationBody, UserResponse, ErrorResponse, AuthenticationBody } from '../types';
 
 export const getArticles = async (currentPage: number): Promise<ArticlesType> => {
-    const OffSetPage = (currentPage - 1) * 5;
-    const res = await fetch(`https://conduit.productionready.io/api/articles?limit=5&&offset=${OffSetPage}`)
-    if (!res.ok) {
-        throw new Error(`Could not fetch https://conduit.productionready.io/api/articles?limit=5&&offset=${OffSetPage} , received ${res.status}`);
-    }
-    return res.json()
+  const OffSetPage = (currentPage - 1) * 5;
+  const res = await fetch(`https://conduit.productionready.io/api/articles?limit=5&&offset=${OffSetPage}`)
+  if (!res.ok) {
+    throw new Error(`Could not fetch https://conduit.productionready.io/api/articles?limit=5&&offset=${OffSetPage} , received ${res.status}`);
+  }
+  return res.json()
 }
 
 export const getArticle = async (id: string): Promise<ArticleFullType> => {
-    const res = await fetch(`https://conduit.productionready.io/api/articles/${id}`);
-    if (!res.ok) {
-        throw new Error(`https://conduit.productionready.io/api/articles/${id} , received ${res.status}`);
+  const res = await fetch(`https://conduit.productionready.io/api/articles/${id}`);
+  if (!res.ok) {
+    throw new Error(`https://conduit.productionready.io/api/articles/${id} , received ${res.status}`);
+  }
+  return res.json()
+}
+
+export const registrationRequest = async (body: RegistrationBody): Promise<UserResponse & ErrorResponse> => {
+
+  const res = await fetch(`https://conduit.productionready.io/api/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(body),
+  });
+
+  // if (!res.ok) {
+  //   return res.json();
+  //   // throw new Error(res.json());
+  // }
+  return res.json()
+}
+export const authenticationRequest = async (body: AuthenticationBody): Promise<UserResponse & ErrorResponse> => {
+
+  const res = await fetch(`https://conduit.productionready.io/api/users/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(body),
+  });
+
+  // if (!res.ok) {
+  //   return res.json();
+  //   // throw new Error(res.json());
+  // }
+  return res.json()
+}
+
+
+
+export const getUser = async (token: string): Promise<UserResponse> => {
+  const res = await fetch(`https://conduit.productionready.io/api/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Token ${token}`
     }
-    return res.json()
+  })
+  if (!res.ok) {
+    throw new Error(`Could not fetch https://conduit.productionready.io/api/user , received ${res.status}`);
+  }
+  return res.json()
 }

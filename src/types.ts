@@ -5,65 +5,67 @@ import { FieldErrors, ValidationRules } from 'react-hook-form';
 
 
 export type ErrorState = {
-    hasError: boolean
+  hasError: boolean
 }
 
 // !!!  Temp 
-export type ActionsGetType = {
-    type: Actions.getArticles,
-    payload: ArticlesType
+export type ActionSetUser = {
+  type: Actions.setUser,
+  payload: User | null
 }
 
 export enum Actions {
-    getArticles = 'GET_ARTICLES'
+  getArticles = 'GET_ARTICLES',
+  setUser = "SET_USER"
 }
 
 export type State = {
-    articles: ArticleType[],
-    articlesCount: number
+  user: User | null
 }
 // !!
 export type ButtonProps = {
-    className?: string
-    variant?: 'sign' | undefined
-    onClick?: ((event: React.MouseEvent<HTMLElement, MouseEvent>) => void) | undefined;
-    value?: string | undefined
+  className?: string
+  variant?: 'sign' | undefined
+  onClick?: ((event: React.MouseEvent<HTMLElement, MouseEvent>) => void) | undefined;
+  value?: string | undefined
 }
 
 export type ArticlesType = {
-    articles: ArticleType[],
-    articlesCount: number
+  articles: ArticleType[],
+  articlesCount: number
 }
 
 export type ArticleFullType = {
-    article: ArticleType
+  article: ArticleType
 }
 
 export type ArticleType = {
-    full?: boolean
-    slug: string,
-    title: string,
-    description: string,
-    body: string,
-    tagList: string[],
-    createdAt: string,
-    updatedAt: string,
-    favorited: false,
-    favoritesCount: number,
-    author: {
-        username: string,
-        bio: string,
-        image: string,
-        following: false
-    }
+  full?: boolean
+  slug: string,
+  title: string,
+  description: string,
+  body: string,
+  tagList: string[],
+  createdAt: string,
+  updatedAt: string,
+  favorited: false,
+  favoritesCount: number,
+  author: {
+    username: string,
+    bio: string,
+    image: string,
+    following: false
+  }
 }
 
 export type InputProps = {
-    label: string,
-    type: string,
-    errors?: FieldErrors,
-    errorMassage?: string,
-    rules?: ValidationRules
+  label: string,
+  name: string,
+  type: string,
+  errors?: FieldErrors,
+  errorMassage?: string,
+  responseError: string | null
+  rules?: ValidationRules
 };
 
 export type InputPropsWithoutErrors = Omit<InputProps, 'errors'>;
@@ -77,13 +79,57 @@ export type InputPropsWithoutErrors = Omit<InputProps, 'errors'>;
 // }
 
 export type FormDataSingUp = {
-    Username: string;
-    'Email address': string;
-    Password: string;
-    'Repeat Password': string;
+  username: string;
+  email: string;
+  password: string;
+  repeatPassword: string;
 };
 
 export type FormDataSingIn = {
-    Password: string;
-    'Email address': string;
+  password: string;
+  email: string;
 };
+
+
+export type RegistrationBody = {
+  user: {
+    username: string,
+    email: string,
+    password: string
+  }
+}
+
+export type AuthenticationBody = {
+  user: {
+    email: string,
+    password: string
+  }
+}
+
+export type UserResponse = {
+  user: User
+}
+
+export type User = {
+  email: string,
+  token: string,
+  username: string,
+  bio: string,
+  image: string,
+  id: number
+  createdAt: string,
+  updatedAt: string
+}
+
+export type ErrorResponse = {
+  errors?: {
+    body?: string[]
+    email?: string[],
+    username?: string[],
+  }
+}
+
+export type ErrorResponseKey = 'email' | 'username' | 'body'
+
+
+

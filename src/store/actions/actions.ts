@@ -1,23 +1,8 @@
 /* eslint-disable import/prefer-default-export */
-import { Dispatch } from 'redux'
-import { Actions } from '../../types';
-import { getArticles } from '../../services/serviceAPI'
+import { Actions, User, ActionSetUser } from '../../types';
 
-
-
-const getArticlesAction = (currentPage: number) => {
-    return (dispatch: Dispatch): void => {
-        getArticles(currentPage).then((value) => {
-            dispatch({
-                type: Actions.getArticles,
-                payload: value
-            })
-        })
-    }
-}
-
-
+const setUserAction = (payload: User | null): ActionSetUser => ({ type: Actions.setUser, payload })
 
 export {
-    getArticlesAction
-} 
+    setUserAction
+}   

@@ -15,3 +15,70 @@
   font-size: 18px;
   line-height: 28px;
 }
+
+.infoUser {
+  display: inline-block;
+  width: fit-content;
+  height: 46px;
+  display: flex;
+
+  img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.h6 {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.85);
+  margin: auto 10px;
+}
+
+.create {
+  width: 112.23px;
+  height: 31.1px;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  box-sizing: border-box;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: inherit;
+  margin: auto;
+}
+
+.create:focus {
+  color: #52c41a;
+  outline-color: #52c41a;
+}
+
+.logOut {
+  width: 109px;
+  height: 51px;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 28px;
+  color: rgba(0, 0, 0, 0.75);
+  background-color: inherit;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.logOut:focus {
+  color: #52c41a;
+  outline-color: #52c41a;
+}

@@ -1,6 +1,7 @@
 .wrapper {
   width: 384px;
-  height: 374px;
+  max-height: fit-content;
+  min-height: 374px;
   background: #ffffff;
   margin: 30px auto 0 auto;
   padding: 40px 0 0 0;
@@ -10,6 +11,7 @@
     0px 4.91399px 23.6765px rgba(0, 0, 0, 0.0417275), 0px 2.75474px 13.2728px rgba(0, 0, 0, 0.035),
     0px 1.46302px 7.04911px rgba(0, 0, 0, 0.0282725), 0px 0.608796px 2.93329px rgba(0, 0, 0, 0.0196802);
   border-radius: 6px;
+  padding-bottom: 50px;
 }
 
 .title {
@@ -40,4 +42,15 @@
   font-size: 12px;
   line-height: 20px;
   color: #8c8c8c;
+}
+
+.errSpan {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  color: #f5222d;
+  display: block;
+  width: fit-content;
+  margin: auto;
 }
