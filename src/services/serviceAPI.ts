@@ -1,4 +1,4 @@
-import { ArticlesType, ArticleFullType, RegistrationBody, UserResponse, ErrorResponse, AuthenticationBody } from '../types';
+import { ArticlesType, ArticleFullType, RegistrationBody, UserResponse, ErrorResponse, AuthenticationBody, EditBody } from '../types';
 
 export const getArticles = async (currentPage: number): Promise<ArticlesType> => {
   const OffSetPage = (currentPage - 1) * 5;
@@ -26,11 +26,6 @@ export const registrationRequest = async (body: RegistrationBody): Promise<UserR
     },
     body: JSON.stringify(body),
   });
-
-  // if (!res.ok) {
-  //   return res.json();
-  //   // throw new Error(res.json());
-  // }
   return res.json()
 }
 export const authenticationRequest = async (body: AuthenticationBody): Promise<UserResponse & ErrorResponse> => {
@@ -42,11 +37,6 @@ export const authenticationRequest = async (body: AuthenticationBody): Promise<U
     },
     body: JSON.stringify(body),
   });
-
-  // if (!res.ok) {
-  //   return res.json();
-  //   // throw new Error(res.json());
-  // }
   return res.json()
 }
 
@@ -65,3 +55,15 @@ export const getUser = async (token: string): Promise<UserResponse> => {
   }
   return res.json()
 }
+
+export const editProfileRequest = async (body: EditBody, token: string): Promise<UserResponse & ErrorResponse> => {
+  const res = await fetch(`https://conduit.productionready.io/api/user`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify(body),
+  });
+  return res.json()
+}  

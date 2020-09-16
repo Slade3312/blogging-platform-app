@@ -11,7 +11,7 @@ import { FormDataSingUp, RegistrationBody, ErrorResponse, ErrorResponseKey, Inpu
 import InputFormSingUpProps from './config';
 import { registrationRequest } from '../../services/serviceAPI';
 
-function responseErrorSeach(errorObj: ErrorResponse, props: InputProps): string | null {
+function responseErrorSearch(errorObj: ErrorResponse, props: InputProps): string | null {
   if (errorObj.errors) {
     const errkeys = Object.keys(errorObj.errors);
     const errkey = errkeys.find((key) => props.label === key) as ErrorResponseKey;
@@ -39,8 +39,6 @@ const SignUpForm: React.FC<Props> = ({ setUserAction }) => {
   const { register, handleSubmit, errors, getValues } = useForm<FormDataSingUp>({ mode: 'onChange' });
   const [agree, setAgree] = useState(false);
   const history = useHistory();
-
-  console.log(history);
 
   function onSubmit(data: FormDataSingUp) {
     if (!agree) return;
@@ -73,7 +71,7 @@ const SignUpForm: React.FC<Props> = ({ setUserAction }) => {
 
   const contentInput = InputFormSingUpProps.map((input) => {
     const { rules, ...propsInput } = input;
-    const responseError = responseErrorSeach(responseErrorObj, propsInput);
+    const responseError = responseErrorSearch(responseErrorObj, propsInput);
     const propsInputWithError = { ...propsInput, errors, responseError };
     return <InputForm {...propsInputWithError} ref={register(rules)} />;
   });
