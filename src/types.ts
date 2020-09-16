@@ -90,6 +90,22 @@ export type FormDataSingIn = {
   email: string;
 };
 
+export type FormDataEdit = {
+  username: string;
+  email: string;
+  password: string;
+  image: string;
+};
+
+export type EditBody = {
+  user: {
+    username: string;
+    email: string;
+    password: string;
+    image: string;
+  }
+}
+
 
 export type RegistrationBody = {
   user: {
