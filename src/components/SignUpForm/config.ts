@@ -2,11 +2,13 @@ import { InputPropsWithoutErrors } from "../../types";
 
 const InputFormSingUpProps: InputPropsWithoutErrors[] = [
   {
-    label: 'username',
-    name: 'Username',
+    label: 'Username',
+    name: 'username',
     type: 'text',
+    placeholder: 'Username',
     errorMassage: 'Username must be between 3 and 20 characters',
     responseError: null,
+    id: `${Math.random()}`,
     rules: {
       required: true,
       maxLength: 20,
@@ -14,9 +16,11 @@ const InputFormSingUpProps: InputPropsWithoutErrors[] = [
     }
   },
   {
-    label: 'email',
-    name: 'Email address',
+    label: 'Email address',
+    name: 'email',
     type: 'email',
+    placeholder: 'Email address',
+    id: `${Math.random()}`,
     errorMassage: 'Email address must be correct',
     responseError: null,
     rules: {
@@ -25,9 +29,11 @@ const InputFormSingUpProps: InputPropsWithoutErrors[] = [
     }
   },
   {
-    label: 'password',
-    name: 'Password',
+    label: 'Password',
+    name: 'password',
     type: 'password',
+    placeholder: 'Password',
+    id: `${Math.random()}`,
     errorMassage: 'Password must be between 6 and 40 characters',
     responseError: null,
     rules: {
@@ -37,9 +43,11 @@ const InputFormSingUpProps: InputPropsWithoutErrors[] = [
     }
   },
   {
-    label: 'repeatPassword',
-    name: 'Repeat Password',
+    label: 'Repeat Password',
+    name: 'repeatPassword',
     type: 'password',
+    placeholder: 'Repeat Password',
+    id: `${Math.random()}`,
     errorMassage: 'Passwords should match!',
     responseError: null,
     rules: {

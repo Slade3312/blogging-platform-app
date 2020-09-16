@@ -8,6 +8,7 @@ import ArticleFull from '../ArticleFull/ArticleFull';
 import SignInForm from '../SignInForm/SignInForm';
 import SignUpForm from '../SignUpForm/SignUpForm';
 import ProfileEditForm from '../ProfileEditForm/ProfileEditForm';
+import CreateArticle from '../CreateArticle/CreateArticle';
 
 const App: React.FC = () => {
   return (
@@ -29,6 +30,9 @@ const App: React.FC = () => {
         </Route>
         <Route path="/profile">
           <ProfileEditForm />
+        </Route>
+        <Route path="/new-article">
+          <CreateArticle />
         </Route>
       </Switch>
     </div>

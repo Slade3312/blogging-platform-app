@@ -3,9 +3,11 @@ import { InputPropsWithoutErrors } from "../../types";
 
 const InputFormEditProps: InputPropsWithoutErrors[] = [
   {
-    label: 'username',
-    name: 'Username',
+    label: 'Username',
+    name: 'username',
     type: 'text',
+    placeholder: 'Username',
+    id: `${Math.random()}`,
     errorMassage: 'Username must be between 3 and 20 characters',
     responseError: null,
     rules: {
@@ -15,9 +17,11 @@ const InputFormEditProps: InputPropsWithoutErrors[] = [
     }
   },
   {
-    name: 'Email address',
-    label: 'email',
+    name: 'email',
+    label: 'Email address',
     type: 'email',
+    placeholder: 'Email address',
+    id: `${Math.random()}`,
     errorMassage: 'Email address must be correct',
     responseError: null,
     rules: {
@@ -26,11 +30,13 @@ const InputFormEditProps: InputPropsWithoutErrors[] = [
     }
   },
   {
-    name: 'New password',
-    label: 'password',
+    name: 'password',
+    label: 'New password',
     type: 'password',
+    placeholder: 'New password',
     errorMassage: 'Password must be between 6 and 40 characters',
     responseError: null,
+    id: `${Math.random()}`,
     rules: {
       required: true,
       maxLength: 40,
@@ -38,10 +44,12 @@ const InputFormEditProps: InputPropsWithoutErrors[] = [
     }
   },
   {
-    label: 'image',
-    name: 'Avatar image',
-    type: 'text',
+    label: 'Avatar image (url)',
+    name: 'image',
+    type: 'url',
+    placeholder: 'Avatar image',
     errorMassage: 'enter correct url',
+    id: `${Math.random()}`,
     responseError: null,
     rules: {
       required: true,

@@ -59,12 +59,22 @@ export type ArticleType = {
 }
 
 export type InputProps = {
-  label: string,
+  label?: string,
   name: string,
+  value?: string
   type: string,
+  readOnly?: boolean,
+  style?: {
+    width?: string,
+    'min-height'?: string,
+    'max-height'?: string,
+  },
+  id?: string
+  textarea?: boolean,
+  placeholder?: string
   errors?: FieldErrors,
   errorMassage?: string,
-  responseError: string | null
+  responseError?: string | null
   rules?: ValidationRules
 };
 
@@ -97,6 +107,17 @@ export type FormDataEdit = {
   image: string;
 };
 
+export type FormDataArticle = {
+  title: string,
+  description: string,
+  body: string,
+  tagList?: string[]
+};
+
+export type FormDataTags = {
+  tag: string,
+};
+
 export type EditBody = {
   user: {
     username: string;
@@ -119,6 +140,15 @@ export type AuthenticationBody = {
   user: {
     email: string,
     password: string
+  }
+}
+
+export type CreateArticleBody = {
+  article: {
+    title: string,
+    description: string,
+    body: string,
+    tagList?: string[]
   }
 }
 

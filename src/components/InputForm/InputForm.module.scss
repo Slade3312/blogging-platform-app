@@ -1,6 +1,6 @@
 .wrapper {
   font-family: 'Roboto-Regular';
-  width: fit-content;
+  width: 85%;
   margin: 20px auto;
 }
 
@@ -19,7 +19,7 @@
   border: 1px solid #d9d9d9;
   box-sizing: border-box;
   border-radius: 4px;
-  width: 320px;
+  width: 100%;
   height: 40px;
   font-family: inherit;
   font-style: normal;
@@ -46,4 +46,5 @@
   line-height: 22px;
   color: #f5222d;
   display: block;
+  position: absolute;
 }

@@ -49,9 +49,11 @@ const Header: React.FC<Props> = ({ user, setUserAction }) => {
       return (
         <>
           <div className={headerClass.infoUser}>
-            <button type="button" className={headerClass.create}>
-              Create article
-            </button>
+            <Link to="/new-article" className={headerClass.link}>
+              <button type="button" className={headerClass.create}>
+                Create article
+              </button>
+            </Link>
             <Link to="/profile" className={headerClass.link}>
               <h6 className={headerClass.h6}>{username}</h6>
               <img src={image} alt="Avatar" />

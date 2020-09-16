@@ -67,7 +67,7 @@ const SignInForm: React.FC<Props> = ({ user, setUserAction }) => {
         {contentInput}
         {responseError && <span className={signInFormClass.errSpan}>password or email is not correct</span>}
         <Button className={signInFormClass.button} type="primary" htmlType="submit">
-          Create
+          Login
         </Button>
         <span className={signInFormClass.span}>
           Don`t have an account? <Link to="/sign-up">Sign Up</Link>

@@ -1,4 +1,4 @@
-import { ArticlesType, ArticleFullType, RegistrationBody, UserResponse, ErrorResponse, AuthenticationBody, EditBody } from '../types';
+import { ArticlesType, ArticleFullType, RegistrationBody, UserResponse, ErrorResponse, AuthenticationBody, EditBody, CreateArticleBody } from '../types';
 
 export const getArticles = async (currentPage: number): Promise<ArticlesType> => {
   const OffSetPage = (currentPage - 1) * 5;
@@ -40,9 +40,23 @@ export const authenticationRequest = async (body: AuthenticationBody): Promise<U
   return res.json()
 }
 
+export const createArticleRequest = async (body: CreateArticleBody, token: string): Promise<ArticleFullType & ErrorResponse> => {
+
+  const res = await fetch(`https://conduit.productionready.io/api/users/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify(body),
+  });
+  return res.json()
+}
+
 
 
 export const getUser = async (token: string): Promise<UserResponse> => {
+
   const res = await fetch(`https://conduit.productionready.io/api/user`, {
     method: 'GET',
     headers: {
@@ -57,6 +71,7 @@ export const getUser = async (token: string): Promise<UserResponse> => {
 }
 
 export const editProfileRequest = async (body: EditBody, token: string): Promise<UserResponse & ErrorResponse> => {
+
   const res = await fetch(`https://conduit.productionready.io/api/user`, {
     method: 'PUT',
     headers: {
