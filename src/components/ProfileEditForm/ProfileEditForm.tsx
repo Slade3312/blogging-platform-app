@@ -33,11 +33,13 @@ const connector = connect(mapStateToProps, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
-const ProfileEditForm: React.FC<Props> = ({ setUserAction }) => {
+const ProfileEditForm: React.FC<Props> = ({ user, setUserAction }) => {
   const { register, handleSubmit, errors } = useForm<FormDataEdit>({ mode: 'onChange' });
   const [responseErrorObj, setResponseError] = useState<ErrorResponse>({});
   const [cookies, setCookie] = useCookies(['token']);
   const history = useHistory();
+
+  if (cookies.token === undefined) history.push('/sign-in');
 
   const onSubmit = (data: FormDataEdit) => {
     const { email, password, image, username } = data;
@@ -61,9 +63,23 @@ const ProfileEditForm: React.FC<Props> = ({ setUserAction }) => {
   };
 
   const contentInput = InputFormEditProps.map((input) => {
+    let defaultValue: string | undefined;
+    switch (input.name) {
+      case 'username':
+        defaultValue = user?.username;
+        break;
+      case 'email':
+        defaultValue = user?.email;
+        break;
+      case 'image':
+        defaultValue = user?.image;
+        break;
+      default:
+        break;
+    }
     const { rules, ...propsInput } = input;
     const responseError = responseErrorSearch(responseErrorObj, propsInput);
-    const propsInputWithError = { ...propsInput, errors, responseError };
+    const propsInputWithError = { ...propsInput, errors, responseError, defaultValue };
     return <InputForm {...propsInputWithError} ref={register(rules)} />;
   });
 

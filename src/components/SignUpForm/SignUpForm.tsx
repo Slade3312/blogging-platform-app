@@ -19,6 +19,7 @@ function responseErrorSearch(errorObj: ErrorResponse, props: InputProps): string
   }
   return null;
 }
+//! ! Исправить!
 
 function mapStateToProps(state: State) {
   const { user } = state;

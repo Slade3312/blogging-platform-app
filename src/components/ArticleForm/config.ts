@@ -34,7 +34,7 @@ const InputFormCreateArticleProps: InputPropsWithoutErrors[] = [
     placeholder: 'Text',
     textarea: true,
     id: `${Math.random()}`,
-    style: { 'min-height': '168px', 'max-height': 'fit-content' },
+    style: { 'minHeight': '168px', 'maxHeight': 'fitContent' },
     errorMassage: 'should not be empty',
     responseError: null,
     rules: {

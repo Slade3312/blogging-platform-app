@@ -1,4 +1,4 @@
-import { ArticlesType, ArticleFullType, RegistrationBody, UserResponse, ErrorResponse, AuthenticationBody, EditBody, CreateArticleBody } from '../types';
+import { ArticlesType, ArticleFullType, RegistrationBody, UserResponse, ErrorResponse, AuthenticationBody, EditBody, ArticleFormBody } from '../types';
 
 export const getArticles = async (currentPage: number): Promise<ArticlesType> => {
   const OffSetPage = (currentPage - 1) * 5;
@@ -40,15 +40,40 @@ export const authenticationRequest = async (body: AuthenticationBody): Promise<U
   return res.json()
 }
 
-export const createArticleRequest = async (body: CreateArticleBody, token: string): Promise<ArticleFullType & ErrorResponse> => {
+export const createArticleRequest = async (body: ArticleFormBody, token: string): Promise<ArticleFullType & ErrorResponse> => {
 
-  const res = await fetch(`https://conduit.productionready.io/api/users/login`, {
+  const res = await fetch(`https://conduit.productionready.io/api/articles`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8',
       'Authorization': `Token ${token}`
     },
     body: JSON.stringify(body),
+  });
+  return res.json()
+}
+
+export const updateArticleRequest = async (body: ArticleFormBody, token: string, slug: string): Promise<ArticleFullType & ErrorResponse> => {
+
+  const res = await fetch(`https://conduit.productionready.io/api/articles/${slug}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Token ${token}`
+    },
+    body: JSON.stringify(body),
+  });
+  return res.json()
+}
+
+export const deleteArticleRequest = async (slug: string, token: string): Promise<ArticleFullType & ErrorResponse> => {
+
+  const res = await fetch(`https://conduit.productionready.io/api//articles/${slug}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Token ${token}`
+    },
   });
   return res.json()
 }
@@ -81,4 +106,16 @@ export const editProfileRequest = async (body: EditBody, token: string): Promise
     body: JSON.stringify(body),
   });
   return res.json()
-}  
+}
+
+export const setFavoriteArticle = async (token: string, slug: string): Promise<ArticleFullType & ErrorResponse> => {
+
+  const res = await fetch(`https://conduit.productionready.io/api/articles/${slug}/favorite`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Token ${token}`
+    },
+  });
+  return res.json()
+}

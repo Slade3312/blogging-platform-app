@@ -66,11 +66,13 @@ export type InputProps = {
   readOnly?: boolean,
   style?: {
     width?: string,
-    'min-height'?: string,
-    'max-height'?: string,
+    'minHeight'?: string,
+    'maxHeight'?: string,
   },
   id?: string
   textarea?: boolean,
+  defaultValue?: string,
+  tagList?: string[]
   placeholder?: string
   errors?: FieldErrors,
   errorMassage?: string,
@@ -111,8 +113,7 @@ export type FormDataArticle = {
   title: string,
   description: string,
   body: string,
-  tagList?: string[]
-};
+}
 
 export type FormDataTags = {
   tag: string,
@@ -143,7 +144,7 @@ export type AuthenticationBody = {
   }
 }
 
-export type CreateArticleBody = {
+export type ArticleFormBody = {
   article: {
     title: string,
     description: string,

@@ -24,13 +24,11 @@ const connector = connect(mapStateToProps, mapDispatch);
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux;
 
-const SignInForm: React.FC<Props> = ({ user, setUserAction }) => {
+const SignInForm: React.FC<Props> = ({ setUserAction }) => {
   const [responseError, setResponseError] = useState(false);
   const { register, handleSubmit, errors } = useForm<FormDataSingIn>({ mode: 'onChange' });
   const [cookies, setCookie] = useCookies(['token']);
   const history = useHistory();
-
-  console.log(history);
 
   const onSubmit = (data: FormDataSingIn) => {
     setResponseError(false);
@@ -51,7 +49,6 @@ const SignInForm: React.FC<Props> = ({ user, setUserAction }) => {
         }
       })
       .catch((err) => console.log(err));
-    console.log(data);
   };
 
   const contentInput = InputFormSingInProps.map((input) => {

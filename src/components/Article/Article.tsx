@@ -1,60 +1,116 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import MarkdownPreview from '@uiw/react-markdown-preview';
+import { connect, ConnectedProps } from 'react-redux';
+import { useCookies } from 'react-cookie';
 import articleClass from './Article.module.scss';
-import { ArticleType } from '../../types';
-import like from '../../img/Vector.png';
+import { ArticleType, State } from '../../types';
 import Button from '../Button/Button';
+import { deleteArticleRequest, setFavoriteArticle } from '../../services/serviceAPI';
+import exclamationImg from '../../img/deleteBlog.png';
 
-const Article: React.FC<ArticleType> = (props) => {
-  const {
-    title,
-    author: { username, image },
-    createdAt,
-    tagList,
-    favoritesCount,
-    description,
-    slug,
-    full,
-  } = props;
+function mapStateToProps(state: State) {
+  const { user } = state;
+  return {
+    user,
+  };
+}
 
-  const source = ` 
- # English-for-kids
-Application  for learning English by children
+const connector = connect(mapStateToProps);
 
-## Критерии оценки:
-**Максимальный балл за задание: 170 баллов при кросс-чеке / 200 баллов при проверке ментором**   
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = PropsFromRedux;
 
-## Basic scope +50/+80  
+const Article: React.FC<ArticleType & Props> = ({
+  title,
+  author: { username, image },
+  createdAt,
+  tagList,
+  favoritesCount,
+  favorited,
+  description,
+  slug,
+  full,
+  body,
+  user,
+}) => {
+  const [isModalDelete, setIsModalDelete] = useState(false);
+  const [cookies] = useCookies(['token']);
+  const [currentLikes, setcurrentLikes] = useState(favoritesCount);
+  const history = useHistory();
 
-- **Вёрстка, дизайн, UI главной страницы приложения: (+10)**
-  - [ ] присутствуют все указанные в задании элементы как на мобильной, так и на десктопной версии
-  - [ ] выполнены требования к оформлению приложения 
-`;
+  const deleteArticle = () => {
+    deleteArticleRequest(slug, cookies.token)
+      .then(() => {
+        history.push('./?page=1');
+      })
+      .catch((err) => console.log(err));
+  };
 
-  // function Demo() {
-  //   return ;
-  // }
+  const setLikes = () => {
+    if (favorited || cookies.token === undefined) return;
+    setFavoriteArticle(cookies.token, slug)
+      .then((value) => {
+        setcurrentLikes(value.article.favoritesCount);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const bodyContent = full ? (
     <section className={articleClass.body}>
-      <MarkdownPreview source={source} />
+      <MarkdownPreview source={body} />
     </section>
   ) : null;
+
   const createDate = format(new Date(createdAt), 'MMMMd,y');
   const tagButtons = tagList.map((tag) => (
     <Button key={tag} className="tag">
       {tag}
     </Button>
   ));
+
+  const modalDelete = isModalDelete ? (
+    <div className={articleClass.modalWindow}>
+      <span className={articleClass.textModal}>
+        <img src={exclamationImg} alt="exclamation point" />
+        Are you sure to delete this arcticle
+      </span>
+      <div className={articleClass.wrapperButtons}>
+        <button type="button" className={articleClass.buttonModal} onClick={() => setIsModalDelete(false)}>
+          No
+        </button>
+        <button type="button" className={articleClass.buttonModal} onClick={deleteArticle}>
+          Yes
+        </button>
+      </div>
+    </div>
+  ) : null;
+
+  const editButtons =
+    user?.username === username && full ? (
+      <div className={articleClass.buttonWrapper}>
+        <button type="button" className={articleClass.delete} onClick={() => setIsModalDelete(true)}>
+          DELETE
+        </button>
+        {modalDelete}
+        <button type="button" className={articleClass.edit} onClick={() => history.push(`${slug}/edit`)}>
+          Edit
+        </button>
+      </div>
+    ) : null;
+
+  const { likes, activeLikes, likesRegistration } = articleClass;
+  let classLikes = favoritesCount === 0 ? [likes] : [likes, activeLikes];
+  classLikes = cookies.token === undefined ? [likes, activeLikes] : [likes, activeLikes, likesRegistration];
+
   return (
     <div className={articleClass.wrapper}>
       <header className={articleClass.header}>
         <h2 className={articleClass.h2}>
           <Link to={`/articles/${slug}`}>{title}</Link>
-          <img src={like} alt="likes" />
-          {favoritesCount}
+          <button type="button" aria-label="likes" className={classLikes.join(' ')} onClick={setLikes} />
+          {currentLikes}
           <br />
           {tagButtons}
         </h2>
@@ -67,11 +123,14 @@ Application  for learning English by children
         </div>
       </header>
       <section className={articleClass.description}>
-        <span>{description}</span>
+        <span className={articleClass.descriptionText}>{description}</span>
+        {editButtons}
       </section>
       {bodyContent}
     </div>
   );
 };
 
-export default Article;
+export default connector(Article);
+
+// http://localhost:3000/articles/hello-world-ssjni

@@ -7,13 +7,13 @@ import { ArticleType } from '../../types';
 import Article from '../Article/Article';
 
 const ArticleFull: React.FC = () => {
-  const { artId } = useParams();
+  const { id } = useParams();
   const [article, setArticle] = useState<ArticleType | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    getArticle(artId)
+    getArticle(id)
       .then((value) => {
         setLoading(false);
         setArticle(value.article);
@@ -22,7 +22,7 @@ const ArticleFull: React.FC = () => {
         console.log(err);
         setError(true);
       });
-  }, [artId]);
+  }, [id]);
 
   const content = article ? <Article {...(article as ArticleType)} full /> : null;
 
