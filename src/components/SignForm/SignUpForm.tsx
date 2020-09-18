@@ -5,21 +5,20 @@ import { useForm } from 'react-hook-form';
 import { useCookies } from 'react-cookie';
 import { connect, ConnectedProps } from 'react-redux';
 import * as actions from '../../store/actions/actions';
-import signUpFormClass from './SignUpForm.module.scss';
+import signUpFormClass from './SignForm.module.scss';
 import InputForm from '../InputForm/InputForm';
 import { FormDataSingUp, RegistrationBody, ErrorResponse, ErrorResponseKey, InputProps, State } from '../../types';
-import InputFormSingUpProps from './config';
+import { InputFormSingUpProps } from './config';
 import { registrationRequest } from '../../services/serviceAPI';
 
-function responseErrorSearch(errorObj: ErrorResponse, props: InputProps): string | null {
+function responseErrorSearch(errorObj: ErrorResponse, props: InputProps): string | undefined {
   if (errorObj.errors) {
     const errkeys = Object.keys(errorObj.errors);
-    const errkey = errkeys.find((key) => props.label === key) as ErrorResponseKey;
-    return errkey !== undefined ? errorObj.errors[errkey]!.join() : null;
+    const errkey = errkeys.find((key) => props.name === key) as ErrorResponseKey;
+    return errkey !== undefined ? errorObj.errors[errkey]?.join() : undefined;
   }
-  return null;
+  return undefined;
 }
-//! ! Исправить!
 
 function mapStateToProps(state: State) {
   const { user } = state;
@@ -40,6 +39,8 @@ const SignUpForm: React.FC<Props> = ({ setUserAction }) => {
   const { register, handleSubmit, errors, getValues } = useForm<FormDataSingUp>({ mode: 'onChange' });
   const [agree, setAgree] = useState(false);
   const history = useHistory();
+
+  if (cookies.token !== undefined) history.push('/');
 
   function onSubmit(data: FormDataSingUp) {
     if (!agree) return;
@@ -74,11 +75,11 @@ const SignUpForm: React.FC<Props> = ({ setUserAction }) => {
     const { rules, ...propsInput } = input;
     const responseError = responseErrorSearch(responseErrorObj, propsInput);
     const propsInputWithError = { ...propsInput, errors, responseError };
-    return <InputForm {...propsInputWithError} ref={register(rules)} />;
+    return <InputForm key={input.name} {...propsInputWithError} ref={register(rules)} />;
   });
 
   return (
-    <div className={signUpFormClass.wrapper}>
+    <div className={signUpFormClass.wrapperUp}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2 className={signUpFormClass.title}>Create new account</h2>
         {contentInput}

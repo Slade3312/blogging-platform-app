@@ -4,20 +4,20 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import { connect, ConnectedProps } from 'react-redux';
-import profileEditFormClass from './ProfileEditForm.module.scss';
-import InputFormEditProps from './config';
+import signInFormClass from './SignForm.module.scss';
+import { InputFormEditProps } from './config';
 import { EditBody, ErrorResponse, ErrorResponseKey, FormDataEdit, InputProps, State } from '../../types';
 import { editProfileRequest } from '../../services/serviceAPI';
 import InputForm from '../InputForm/InputForm';
 import * as actions from '../../store/actions/actions';
 
-function responseErrorSearch(errorObj: ErrorResponse, props: InputProps): string | null {
+function responseErrorSearch(errorObj: ErrorResponse, props: InputProps): string | undefined {
   if (errorObj.errors) {
     const errkeys = Object.keys(errorObj.errors);
-    const errkey = errkeys.find((key) => props.label === key) as ErrorResponseKey;
-    return errkey !== undefined ? errorObj.errors[errkey]!.join() : null;
+    const errkey = errkeys.find((key) => props.name === key) as ErrorResponseKey;
+    return errkey !== undefined ? errorObj.errors[errkey]?.join() : undefined;
   }
-  return null;
+  return undefined;
 }
 
 function mapStateToProps(state: State) {
@@ -63,32 +63,19 @@ const ProfileEditForm: React.FC<Props> = ({ user, setUserAction }) => {
   };
 
   const contentInput = InputFormEditProps.map((input) => {
-    let defaultValue: string | undefined;
-    switch (input.name) {
-      case 'username':
-        defaultValue = user?.username;
-        break;
-      case 'email':
-        defaultValue = user?.email;
-        break;
-      case 'image':
-        defaultValue = user?.image;
-        break;
-      default:
-        break;
-    }
     const { rules, ...propsInput } = input;
     const responseError = responseErrorSearch(responseErrorObj, propsInput);
+    const defaultValue = user !== null ? user[input.name] : undefined;
     const propsInputWithError = { ...propsInput, errors, responseError, defaultValue };
-    return <InputForm {...propsInputWithError} ref={register(rules)} />;
+    return <InputForm key={input.name} {...propsInputWithError} ref={register(rules)} />;
   });
 
   return (
-    <div className={profileEditFormClass.wrapper}>
+    <div className={signInFormClass.wrapperEdit}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={profileEditFormClass.title}>Edit Profile</h2>
+        <h2 className={signInFormClass.title}>Edit Profile</h2>
         {contentInput}
-        <Button className={profileEditFormClass.button} type="primary" htmlType="submit">
+        <Button className={signInFormClass.button} type="primary" htmlType="submit">
           Save
         </Button>
       </form>

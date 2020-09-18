@@ -6,7 +6,6 @@ import { connect, ConnectedProps } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import articleClass from './Article.module.scss';
 import { ArticleType, State } from '../../types';
-import Button from '../Button/Button';
 import { deleteArticleRequest, setFavoriteArticle } from '../../services/serviceAPI';
 import exclamationImg from '../../img/deleteBlog.png';
 
@@ -37,7 +36,7 @@ const Article: React.FC<ArticleType & Props> = ({
 }) => {
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [cookies] = useCookies(['token']);
-  const [currentLikes, setcurrentLikes] = useState(favoritesCount);
+  const [currentLikes, setCurrentLikes] = useState(favoritesCount);
   const history = useHistory();
 
   const deleteArticle = () => {
@@ -52,7 +51,7 @@ const Article: React.FC<ArticleType & Props> = ({
     if (favorited || cookies.token === undefined) return;
     setFavoriteArticle(cookies.token, slug)
       .then((value) => {
-        setcurrentLikes(value.article.favoritesCount);
+        setCurrentLikes(value.article.favoritesCount);
       })
       .catch((err) => console.log(err));
   };
@@ -65,9 +64,9 @@ const Article: React.FC<ArticleType & Props> = ({
 
   const createDate = format(new Date(createdAt), 'MMMMd,y');
   const tagButtons = tagList.map((tag) => (
-    <Button key={tag} className="tag">
+    <button key={tag} aria-label="tag" type="button" className={articleClass.tagButton}>
       {tag}
-    </Button>
+    </button>
   ));
 
   const modalDelete = isModalDelete ? (

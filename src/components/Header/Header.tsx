@@ -3,7 +3,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { connect, ConnectedProps } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import headerClass from './Header.module.scss';
-import Button from '../Button/Button';
 import { State } from '../../types';
 import * as actions from '../../store/actions/actions';
 import { getUser } from '../../services/serviceAPI';
@@ -71,11 +70,12 @@ const Header: React.FC<Props> = ({ user, setUserAction }) => {
   const UnregisteredСontent = () => {
     return (
       <>
-        <Link to="/sign-in">
-          <Button className="sign">Sign-In</Button>
+        <Link to="/sign-in" className={headerClass.sign}>
+          Sign-In
         </Link>
-        <Link to="/sign-up">
-          <Button className="sign">Sign-Up</Button>
+        <Link to="/sign-up" className={headerClass.sign}>
+          {' '}
+          Sign-Up
         </Link>
       </>
     );

@@ -5,9 +5,9 @@ import appClass from './App.module.scss';
 import Header from '../Header/Header';
 import ArticlesList from '../ArticlesList/ArticlesList';
 import ArticleFull from '../ArticleFull/ArticleFull';
-import SignInForm from '../SignInForm/SignInForm';
-import SignUpForm from '../SignUpForm/SignUpForm';
-import ProfileEditForm from '../ProfileEditForm/ProfileEditForm';
+import SignInForm from '../SignForm/SignInForm';
+import SignUpForm from '../SignForm/SignUpForm';
+import ProfileEditForm from '../SignForm/ProfileEditForm';
 import ArticleForm from '../ArticleForm/ArticleForm';
 
 const App: React.FC = () => {

@@ -6,8 +6,8 @@ import { connect, ConnectedProps } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import InputForm from '../InputForm/InputForm';
 import { FormDataSingIn, State, AuthenticationBody } from '../../types';
-import signInFormClass from './SignInForm.module.scss';
-import InputFormSingInProps from './config';
+import signInFormClass from './SignForm.module.scss';
+import { InputFormSingInProps } from './config';
 import * as actions from '../../store/actions/actions';
 import { authenticationRequest } from '../../services/serviceAPI';
 
@@ -30,7 +30,9 @@ const SignInForm: React.FC<Props> = ({ setUserAction }) => {
   const [cookies, setCookie] = useCookies(['token']);
   const history = useHistory();
 
-  const onSubmit = (data: FormDataSingIn) => {
+  if (cookies.token !== undefined) history.push('/');
+
+  function onSubmit(data: FormDataSingIn) {
     setResponseError(false);
     const { email, password } = data;
     const body: AuthenticationBody = {
@@ -49,16 +51,16 @@ const SignInForm: React.FC<Props> = ({ setUserAction }) => {
         }
       })
       .catch((err) => console.log(err));
-  };
+  }
 
   const contentInput = InputFormSingInProps.map((input) => {
     const { rules, ...propsInput } = input;
     const propsInputWithError = { ...propsInput, errors };
-    return <InputForm {...propsInputWithError} ref={register(rules)} />;
+    return <InputForm key={input.name} {...propsInputWithError} ref={register(rules)} />;
   });
 
   return (
-    <div className={signInFormClass.wrapper}>
+    <div className={signInFormClass.wrapperIn}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <h2 className={signInFormClass.title}>Sign In</h2>
         {contentInput}

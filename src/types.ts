@@ -1,5 +1,5 @@
 
-// import Button, { ButtonProps } from 'antd/lib/button';
+
 import { FieldErrors, ValidationRules } from 'react-hook-form';
 
 
@@ -8,7 +8,7 @@ export type ErrorState = {
   hasError: boolean
 }
 
-// !!!  Temp 
+
 export type ActionSetUser = {
   type: Actions.setUser,
   payload: User | null
@@ -22,13 +22,7 @@ export enum Actions {
 export type State = {
   user: User | null
 }
-// !!
-export type ButtonProps = {
-  className?: string
-  variant?: 'sign' | undefined
-  onClick?: ((event: React.MouseEvent<HTMLElement, MouseEvent>) => void) | undefined;
-  value?: string | undefined
-}
+
 
 export type ArticlesType = {
   articles: ArticleType[],
@@ -40,7 +34,8 @@ export type ArticleFullType = {
 }
 
 export type ArticleType = {
-  full?: boolean
+  [key: string]: any
+  full?: boolean,
   slug: string,
   title: string,
   description: string,
@@ -158,6 +153,7 @@ export type UserResponse = {
 }
 
 export type User = {
+  [key: string]: any
   email: string,
   token: string,
   username: string,
@@ -170,13 +166,12 @@ export type User = {
 
 export type ErrorResponse = {
   errors?: {
-    body?: string[]
     email?: string[],
     username?: string[],
   }
 }
 
-export type ErrorResponseKey = 'email' | 'username' | 'body'
+export type ErrorResponseKey = 'email' | 'username'
 
 
 
