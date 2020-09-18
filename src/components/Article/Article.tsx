@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { format } from 'date-fns';
 import { Link, useHistory } from 'react-router-dom';
-import MarkdownPreview from '@uiw/react-markdown-preview';
 import { connect, ConnectedProps } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
 import { useCookies } from 'react-cookie';
 import articleClass from './Article.module.scss';
 import { ArticleType, State } from '../../types';
@@ -58,7 +58,7 @@ const Article: React.FC<ArticleType & Props> = ({
 
   const bodyContent = full ? (
     <section className={articleClass.body}>
-      <MarkdownPreview source={body} />
+      <ReactMarkdown source={body} />
     </section>
   ) : null;
 
