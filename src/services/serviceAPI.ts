@@ -119,3 +119,15 @@ export const setFavoriteArticle = async (token: string, slug: string): Promise<A
   });
   return res.json()
 }
+
+export const deleteFavoriteArticle = async (token: string, slug: string): Promise<ArticleFullType & ErrorResponse> => {
+
+  const res = await fetch(`https://conduit.productionready.io/api/articles/${slug}/favorite`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': `Token ${token}`
+    },
+  });
+  return res.json()
+}

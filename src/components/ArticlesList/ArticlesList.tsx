@@ -23,6 +23,7 @@ const ArticlesList: React.FC = () => {
       .then((value) => {
         setLoading(false);
         setArticlesObj(value);
+        console.log('fetch', value);
       })
       .catch((err) => {
         setError(true);

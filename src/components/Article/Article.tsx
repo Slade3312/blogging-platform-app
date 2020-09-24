@@ -6,7 +6,7 @@ import ReactMarkdown from 'react-markdown';
 import { useCookies } from 'react-cookie';
 import articleClass from './Article.module.scss';
 import { ArticleType, State } from '../../types';
-import { deleteArticleRequest, setFavoriteArticle } from '../../services/serviceAPI';
+import { deleteArticleRequest, setFavoriteArticle, deleteFavoriteArticle } from '../../services/serviceAPI';
 import exclamationImg from '../../img/deleteBlog.png';
 
 function mapStateToProps(state: State) {
@@ -36,7 +36,8 @@ const Article: React.FC<ArticleType & Props> = ({
 }) => {
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [cookies] = useCookies(['token']);
-  const [currentLikes, setCurrentLikes] = useState(favoritesCount);
+  const [currentLikes, setCurrentLikes] = useState({ favoritesCount, favorited });
+
   const history = useHistory();
 
   const deleteArticle = () => {
@@ -47,13 +48,27 @@ const Article: React.FC<ArticleType & Props> = ({
       .catch((err) => console.log(err));
   };
 
-  const setLikes = () => {
-    if (favorited || cookies.token === undefined) return;
-    setFavoriteArticle(cookies.token, slug)
-      .then((value) => {
-        setCurrentLikes(value.article.favoritesCount);
-      })
-      .catch((err) => console.log(err));
+  const addDeleteLikes = () => {
+    if (cookies.token === undefined) return;
+    if (currentLikes.favorited) {
+      deleteFavoriteArticle(cookies.token, slug)
+        .then((value) => {
+          setCurrentLikes({
+            favoritesCount: value.article.favoritesCount,
+            favorited: value.article.favorited,
+          });
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setFavoriteArticle(cookies.token, slug)
+        .then((value) => {
+          setCurrentLikes({
+            favoritesCount: value.article.favoritesCount,
+            favorited: value.article.favorited,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const bodyContent = full ? (
@@ -100,16 +115,16 @@ const Article: React.FC<ArticleType & Props> = ({
     ) : null;
 
   const { likes, activeLikes, likesRegistration } = articleClass;
-  let classLikes = favoritesCount === 0 ? [likes] : [likes, activeLikes];
-  classLikes = cookies.token === undefined ? [likes, activeLikes] : [likes, activeLikes, likesRegistration];
+  let classLikes = currentLikes.favoritesCount === 0 ? [likes] : [likes, activeLikes];
+  classLikes = cookies.token === undefined ? classLikes : [...classLikes, likesRegistration];
 
   return (
     <div className={articleClass.wrapper}>
       <header className={articleClass.header}>
         <h2 className={articleClass.h2}>
           <Link to={`/articles/${slug}`}>{title}</Link>
-          <button type="button" aria-label="likes" className={classLikes.join(' ')} onClick={setLikes} />
-          {currentLikes}
+          <button type="button" aria-label="likes" className={classLikes.join(' ')} onClick={addDeleteLikes} />
+          {currentLikes.favoritesCount}
           <br />
           {tagButtons}
         </h2>
